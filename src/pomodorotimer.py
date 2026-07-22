@@ -1,6 +1,5 @@
-from logging import root
-
 import customtkinter
+from settings_ui import SettingsUI
 
 
 class PomodoroTimerApp(customtkinter.CTk):
@@ -8,21 +7,21 @@ class PomodoroTimerApp(customtkinter.CTk):
         super().__init__()
         self.geometry("400x400")
 
-        self.settings_btn = customtkinter.CTkButton(self, width=20, height=20, text="⚙️", command=self.settings_button_callback)
+        self.settings_btn = customtkinter.CTkButton(self, width=30, height=30, text="⚙️", command=self.settings_button_callback)
 
         self.btn_frame = customtkinter.CTkFrame(self, width=100, height=50)
-        self.play_btn = customtkinter.CTkButton(self.btn_frame, width=20, height=20, text="▶️", command=self.play_button_callback)
-        self.pause_btn = customtkinter.CTkButton(self.btn_frame, width=20, height=20, text="⏸️", command=self.pause_button_callback)
-        self.stop_btn = customtkinter.CTkButton(self.btn_frame, width=20, height=20, text="⏹️", command=self.stop_button_callback)
-        self.reset_btn = customtkinter.CTkButton(self.btn_frame, width=20, height=20, text="🔄", command=self.reset_button_callback)
+        self.play_btn = customtkinter.CTkButton(self.btn_frame, width=30, height=30, text="▶️", command=self.play_button_callback)
+        self.pause_btn = customtkinter.CTkButton(self.btn_frame, width=30, height=30, text="⏸️", command=self.pause_button_callback)
+        self.stop_btn = customtkinter.CTkButton(self.btn_frame, width=30, height=30, text="⏹️", command=self.stop_button_callback)
+        self.reset_btn = customtkinter.CTkButton(self.btn_frame, width=30, height=30, text="🔄", command=self.reset_button_callback)
 
         self.timer_frame = customtkinter.CTkFrame(self, width=100, height=50)
         self.timer_text = customtkinter.CTkLabel(self.timer_frame, text="25:00", font=("Arial", 24))
 
-        self.rs_spacer_frame = customtkinter.CTkFrame(self, width=20, height=20)
+        self.rs_spacer_frame = customtkinter.CTkFrame(self, width=30, height=30)
 
         # Build layout
-        self.settings_btn.grid(row=0, column=0, padx=10, pady=10)
+        self.settings_btn.grid(row=0, column=0, padx=10, pady=10, sticky="nw")
 
         self.timer_frame.grid(row=1, column=1, columnspan=6, padx=10, pady=10)
         self.timer_text.grid(row=0, column=0)
@@ -40,7 +39,7 @@ class PomodoroTimerApp(customtkinter.CTk):
             self.columnconfigure(i, weight=1)
 
     def settings_button_callback(self):
-        pass
+        SettingsUI(self)
 
     def play_button_callback(self):
         pass
