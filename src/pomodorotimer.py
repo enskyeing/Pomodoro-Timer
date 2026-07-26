@@ -71,7 +71,12 @@ class PomodoroTimerApp(customtkinter.CTk):
         self.timer_text.configure(text=f"{self.minutes:02d}:{self.seconds:02d}")
 
     def reset_button_callback(self):
-        pass
+        if self.on_break:
+            self.minutes = self.break_duration
+        else:
+            self.minutes = self.work_duration
+        self.seconds = 0
+        self.timer_text.configure(text=f"{self.minutes:02d}:{self.seconds:02d}")
 
     def count_down(self):
         if self.paused:
