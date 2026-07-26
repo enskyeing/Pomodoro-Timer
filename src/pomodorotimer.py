@@ -1,11 +1,22 @@
 import customtkinter
 from settings_ui import SettingsUI
+import json
 
 
 class PomodoroTimerApp(customtkinter.CTk):
     def __init__(self):
         super().__init__()
         self.geometry("400x400")
+
+        with open("src/settings.json", "r") as f:
+            settings = json.load(f)
+            self.work_duration = settings["work_duration"]
+            self.break_duration = settings["break_duration"]
+
+        self.minutes = self.work_duration
+        self.seconds = 0
+
+        self.on_break = False
 
         self.settings_btn = customtkinter.CTkButton(self, width=30, height=30, text="⚙️", command=self.settings_button_callback)
 
@@ -16,7 +27,7 @@ class PomodoroTimerApp(customtkinter.CTk):
         self.reset_btn = customtkinter.CTkButton(self.btn_frame, width=30, height=30, text="🔄", command=self.reset_button_callback)
 
         self.timer_frame = customtkinter.CTkFrame(self, width=100, height=50)
-        self.timer_text = customtkinter.CTkLabel(self.timer_frame, text="25:00", font=("Arial", 24))
+        self.timer_text = customtkinter.CTkLabel(self.timer_frame, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 24))
 
         self.rs_spacer_frame = customtkinter.CTkFrame(self, width=30, height=30)
 
@@ -53,4 +64,5 @@ class PomodoroTimerApp(customtkinter.CTk):
     def reset_button_callback(self):
         pass
 
-    
+    def count_down(self):
+        pass
