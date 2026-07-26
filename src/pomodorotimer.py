@@ -24,7 +24,7 @@ class PomodoroTimerApp(customtkinter.CTk):
         self.btn_frame = customtkinter.CTkFrame(self, width=100, height=50)
         self.play_btn = customtkinter.CTkButton(self.btn_frame, width=30, height=30, text="▶️", command=self.play_button_callback)
         self.pause_btn = customtkinter.CTkButton(self.btn_frame, width=30, height=30, text="⏸️", command=self.pause_button_callback)
-        self.stop_btn = customtkinter.CTkButton(self.btn_frame, width=30, height=30, text="⏹️", command=self.stop_button_callback)
+        self.skip_btn = customtkinter.CTkButton(self.btn_frame, width=30, height=30, text="⏭️", command=self.skip_button_callback)
         self.reset_btn = customtkinter.CTkButton(self.btn_frame, width=30, height=30, text="🔄", command=self.reset_button_callback)
 
         self.timer_frame = customtkinter.CTkFrame(self, width=100, height=50)
@@ -42,7 +42,7 @@ class PomodoroTimerApp(customtkinter.CTk):
         self.reset_btn.grid(row=0, column=0, padx=5, pady=5)
         self.play_btn.grid(row=0, column=1, padx=5, pady=5)
         self.pause_btn.grid(row=0, column=2, padx=5, pady=5)
-        self.stop_btn.grid(row=0, column=3, padx=5, pady=5)
+        self.skip_btn.grid(row=0, column=3, padx=5, pady=5)
 
         self.rs_spacer_frame.grid(row=0, column=7, padx=10, pady=10)
 
@@ -60,8 +60,15 @@ class PomodoroTimerApp(customtkinter.CTk):
     def pause_button_callback(self):
         self.paused = True
 
-    def stop_button_callback(self):
-        pass
+    def skip_button_callback(self):
+        if self.on_break:
+            self.on_break = False
+            self.minutes = self.work_duration
+        else:
+            self.on_break = True
+            self.minutes = self.break_duration
+        self.seconds = 0
+        self.timer_text.configure(text=f"{self.minutes:02d}:{self.seconds:02d}")
 
     def reset_button_callback(self):
         pass
