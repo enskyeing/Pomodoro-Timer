@@ -51,7 +51,8 @@ class PomodoroTimerApp(customtkinter.CTk):
             self.columnconfigure(i, weight=1)
 
     def settings_button_callback(self):
-        SettingsUI(self)
+        self.settings_window = SettingsUI(self)
+        self.settings_window.after(10, self.settings_window.lift)  # Focus on the settings window
 
     def play_button_callback(self):
         self.paused = False
