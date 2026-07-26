@@ -5,7 +5,7 @@ class SettingsUI(customtkinter.CTkToplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("Settings")
-        self.geometry("300x200")
+        self.geometry("300x250")
 
         # WIDGETS
         self.work_duration_frame = customtkinter.CTkFrame(self)
@@ -15,6 +15,10 @@ class SettingsUI(customtkinter.CTkToplevel):
         self.break_duration_frame = customtkinter.CTkFrame(self)
         self.break_duration_label = customtkinter.CTkLabel(self.break_duration_frame, text="Break Duration (minutes):")
         self.break_duration_entry = customtkinter.CTkEntry(self.break_duration_frame)
+
+        self.theme_frame = customtkinter.CTkFrame(self)
+        self.theme_label = customtkinter.CTkLabel(self.theme_frame, text="Theme:")
+        self.theme_selector = customtkinter.CTkOptionMenu(self.theme_frame, values=["Light", "Dark"])
 
         self.save_button = customtkinter.CTkButton(self, text="Save", command=self.save_settings)
 
@@ -29,7 +33,12 @@ class SettingsUI(customtkinter.CTkToplevel):
         self.break_duration_entry.grid(row=1, column=0, sticky="ew")
         self.break_duration_frame.columnconfigure(0, weight=1)
 
-        self.save_button.grid(row=2, column=0, pady=5)
+        self.theme_frame.grid(row=2, column=0, padx=10, pady=5, sticky="ew")
+        self.theme_label.grid(row=0, column=0, sticky="w")
+        self.theme_selector.grid(row=1, column=0, sticky="ew")
+        self.theme_frame.columnconfigure(0, weight=1)
+
+        self.save_button.grid(row=3, column=0, pady=5)
 
         self.columnconfigure(0, weight=1)
 
