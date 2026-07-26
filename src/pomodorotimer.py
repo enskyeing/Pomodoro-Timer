@@ -53,7 +53,7 @@ class PomodoroTimerApp(customtkinter.CTk):
         SettingsUI(self)
 
     def play_button_callback(self):
-        pass
+        self.count_down()
 
     def pause_button_callback(self):
         pass
@@ -65,4 +65,24 @@ class PomodoroTimerApp(customtkinter.CTk):
         pass
 
     def count_down(self):
-        pass
+        if self.seconds == 0:
+            if self.minutes == 0:
+                # Timer finished
+                if self.on_break:
+                    self.on_break = False
+                    self.minutes = self.work_duration
+                else:
+                    self.on_break = True
+                    self.minutes = self.break_duration
+                self.seconds = 0
+            else:
+                self.minutes -= 1
+                self.seconds = 59
+        else:
+            self.seconds -= 1
+
+        # Update the timer display
+        self.timer_text.configure(text=f"{self.minutes:02d}:{self.seconds:02d}")
+
+        # Schedule the next countdown call after 1 second (1000 milliseconds)
+        self.after(1000, self.count_down)
