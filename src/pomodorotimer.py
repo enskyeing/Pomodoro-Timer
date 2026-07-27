@@ -27,8 +27,8 @@ class PomodoroTimerApp(customtkinter.CTk):
         self.skip_btn = customtkinter.CTkButton(self.btn_frame, width=30, height=30, text="⏭️", command=self.skip_button_callback)
         self.reset_btn = customtkinter.CTkButton(self.btn_frame, width=30, height=30, text="🔄", command=self.reset_button_callback)
 
-        self.timer_frame = customtkinter.CTkFrame(self, width=100, height=50)
-        self.timer_text = customtkinter.CTkLabel(self.timer_frame, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 24))
+        self.timer_frame = customtkinter.CTkFrame(self, width=100, height=200)
+        self.timer_text = customtkinter.CTkLabel(self.timer_frame, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 95))
 
         self.rs_spacer_frame = customtkinter.CTkFrame(self, width=30, height=30)
 
@@ -36,7 +36,7 @@ class PomodoroTimerApp(customtkinter.CTk):
         self.settings_btn.grid(row=0, column=0, padx=10, pady=10, sticky="nw")
 
         self.timer_frame.grid(row=1, column=1, columnspan=6, padx=10, pady=10)
-        self.timer_text.grid(row=0, column=0)
+        self.timer_text.grid(row=0, column=0, padx=20, pady=20)
 
         self.btn_frame.grid(row=2, column=2, columnspan=4, padx=10, pady=10)
         self.reset_btn.grid(row=0, column=0, padx=5, pady=5)
