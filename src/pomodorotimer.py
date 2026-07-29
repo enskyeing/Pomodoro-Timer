@@ -1,3 +1,5 @@
+from tkinter import font
+
 import customtkinter
 from settings_ui import SettingsUI
 import json
@@ -6,7 +8,7 @@ import json
 class PomodoroTimerApp(customtkinter.CTk):
     def __init__(self):
         super().__init__()
-        self.geometry("400x400")
+        self.geometry("500x400")
 
         with open("src/settings.json", "r") as f:
             settings = json.load(f)
@@ -27,8 +29,16 @@ class PomodoroTimerApp(customtkinter.CTk):
         self.skip_btn = customtkinter.CTkButton(self.btn_frame, width=30, height=30, text="⏭️", command=self.skip_button_callback)
         self.reset_btn = customtkinter.CTkButton(self.btn_frame, width=30, height=30, text="🔄", command=self.reset_button_callback)
 
-        self.timer_frame = customtkinter.CTkFrame(self, width=100, height=200)
-        self.timer_text = customtkinter.CTkLabel(self.timer_frame, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 95))
+        x, y = 180, 80
+        self.timer_frame = customtkinter.CTkFrame(self, width=x*2, height=y*2)
+        self.timer_canvas = customtkinter.CTkCanvas(self.timer_frame, width=x*2, height=y*2)
+        self.timer_text_outline = [
+            self.timer_canvas.create_text(x - 2, y, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill="#161616"),
+            self.timer_canvas.create_text(x + 2, y, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill="#161616"),
+            self.timer_canvas.create_text(x, y - 2, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill="#161616"),
+            self.timer_canvas.create_text(x, y + 2, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill="#161616"),
+        ]
+        self.timer_text = self.timer_canvas.create_text(x, y, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill="#0D586D")
 
         self.rs_spacer_frame = customtkinter.CTkFrame(self, width=30, height=30)
 
@@ -36,7 +46,7 @@ class PomodoroTimerApp(customtkinter.CTk):
         self.settings_btn.grid(row=0, column=0, padx=10, pady=10, sticky="nw")
 
         self.timer_frame.grid(row=1, column=1, columnspan=6, padx=10, pady=10)
-        self.timer_text.grid(row=0, column=0, padx=20, pady=20)
+        self.timer_canvas.pack()
 
         self.btn_frame.grid(row=2, column=2, columnspan=4, padx=10, pady=10)
         self.reset_btn.grid(row=0, column=0, padx=5, pady=5)
@@ -69,7 +79,7 @@ class PomodoroTimerApp(customtkinter.CTk):
             self.on_break = True
             self.minutes = self.break_duration
         self.seconds = 0
-        self.timer_text.configure(text=f"{self.minutes:02d}:{self.seconds:02d}")
+        self.update_timer_text()
 
     def reset_button_callback(self):
         self.paused = True
@@ -78,7 +88,7 @@ class PomodoroTimerApp(customtkinter.CTk):
         else:
             self.minutes = self.work_duration
         self.seconds = 0
-        self.timer_text.configure(text=f"{self.minutes:02d}:{self.seconds:02d}")
+        self.update_timer_text()
 
     def count_down(self):
         if self.paused:
@@ -101,7 +111,13 @@ class PomodoroTimerApp(customtkinter.CTk):
             self.seconds -= 1
 
         # Update the timer display
-        self.timer_text.configure(text=f"{self.minutes:02d}:{self.seconds:02d}")
+        self.update_timer_text()
 
         # Schedule the next countdown call after 1 second (1000 milliseconds)
         self.after(1000, self.count_down)
+
+    def update_timer_text(self):
+        for item in self.timer_text_outline:
+            self.timer_canvas.itemconfig(item, text=f"{self.minutes:02d}:{self.seconds:02d}")
+
+        self.timer_canvas.itemconfig(self.timer_text, text=f"{self.minutes:02d}:{self.seconds:02d}")
