@@ -1,4 +1,5 @@
 import customtkinter
+import widgets as cw
 
 
 class SettingsUI(customtkinter.CTkToplevel):
@@ -8,22 +9,22 @@ class SettingsUI(customtkinter.CTkToplevel):
         self.geometry("300x300")
 
         # WIDGETS
-        self.work_duration_frame = customtkinter.CTkFrame(self)
-        self.work_duration_holding_frame = customtkinter.CTkFrame(self.work_duration_frame, fg_color="transparent")
-        self.work_duration_label = customtkinter.CTkLabel(self.work_duration_holding_frame, text="Work Duration (minutes):")
-        self.work_duration_entry = customtkinter.CTkEntry(self.work_duration_holding_frame)
+        self.work_duration_frame = cw.TFrame(self)
+        self.work_duration_holding_frame = cw.PlaceholderFrame(self.work_duration_frame)
+        self.work_duration_label = cw.TLabel(self.work_duration_holding_frame, text="Work Duration (minutes):")
+        self.work_duration_entry = cw.TEntry(self.work_duration_holding_frame)
 
-        self.break_duration_frame = customtkinter.CTkFrame(self)
-        self.break_duration_holding_frame = customtkinter.CTkFrame(self.break_duration_frame, fg_color="transparent")
-        self.break_duration_label = customtkinter.CTkLabel(self.break_duration_holding_frame, text="Break Duration (minutes):")
-        self.break_duration_entry = customtkinter.CTkEntry(self.break_duration_holding_frame)
+        self.break_duration_frame = cw.TFrame(self)
+        self.break_duration_holding_frame = cw.PlaceholderFrame(self.break_duration_frame)
+        self.break_duration_label = cw.TLabel(self.break_duration_holding_frame, text="Break Duration (minutes):")
+        self.break_duration_entry = cw.TEntry(self.break_duration_holding_frame)
 
-        self.theme_frame = customtkinter.CTkFrame(self)
-        self.theme_holding_frame = customtkinter.CTkFrame(self.theme_frame, fg_color="transparent")
-        self.theme_label = customtkinter.CTkLabel(self.theme_holding_frame, text="Theme:")
-        self.theme_selector = customtkinter.CTkOptionMenu(self.theme_holding_frame, values=["Light", "Dark"])
+        self.theme_frame = cw.TFrame(self)
+        self.theme_holding_frame = cw.PlaceholderFrame(self.theme_frame)
+        self.theme_label = cw.TLabel(self.theme_holding_frame, text="Theme:")
+        self.theme_selector = cw.TOptionMenu(self.theme_holding_frame, values=["Light", "Dark"])
 
-        self.save_button = customtkinter.CTkButton(self, text="Save", command=self.save_settings)
+        self.save_button = cw.TButton(self, text="Save", command=self.save_settings)
 
         # LAYOUT
         self.work_duration_frame.grid(row=0, column=0, padx=10, pady=5, sticky="ew")
