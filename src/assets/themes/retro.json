@@ -61,7 +61,8 @@
     "fg_color": "transparent"
   },
   "CTkCanvas": {
-    "bg": "#7FEFBD"
+    "bg": "#7FEFBD",
+    "highlightthickness": 0
   },
   "CTkFont": {
     "macOS": {
