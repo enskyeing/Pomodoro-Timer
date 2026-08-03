@@ -62,7 +62,8 @@
   },
   "CTkCanvas": {
     "bg": "#7FEFBD",
-    "highlightthickness": 0
+    "highlightthickness": 0,
+    "borderwidth": 0
   },
   "CTkFont": {
     "macOS": {
