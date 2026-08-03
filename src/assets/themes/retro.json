@@ -57,6 +57,12 @@
     "hover_color": ["gray75", "gray28"],
     "text_color": ["gray14", "gray84"]
   },
+  "PlaceholderFrame": {
+    "fg_color": "transparent"
+  },
+  "CTkCanvas": {
+    "bg": "#7FEFBD"
+  },
   "CTkFont": {
     "macOS": {
       "family": "SF Display",
