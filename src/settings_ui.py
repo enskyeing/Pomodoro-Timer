@@ -1,5 +1,6 @@
 import customtkinter
 import widgets as cw
+from theme.thememanager import ThemeManager
 
 
 class SettingsUI(customtkinter.CTkToplevel):
@@ -8,20 +9,30 @@ class SettingsUI(customtkinter.CTkToplevel):
         self.title("Settings")
         self.geometry("300x300")
 
+        self.theme = ThemeManager.theme
+
+        self.configure(fg_color=self.theme["CTk"]["fg_color"])
+
         # WIDGETS
         self.work_duration_frame = cw.TFrame(self)
+        self.work_duration_frame.configure(fg_color=self.theme["CTkFrame"]["settings"])
         self.work_duration_holding_frame = cw.PlaceholderFrame(self.work_duration_frame)
         self.work_duration_label = cw.TLabel(self.work_duration_holding_frame, text="Work Duration (minutes):")
+        self.work_duration_label.configure(text_color=self.theme["CTkLabel"]["settings"])
         self.work_duration_entry = cw.TEntry(self.work_duration_holding_frame)
 
         self.break_duration_frame = cw.TFrame(self)
+        self.break_duration_frame.configure(fg_color=self.theme["CTkFrame"]["settings"])
         self.break_duration_holding_frame = cw.PlaceholderFrame(self.break_duration_frame)
         self.break_duration_label = cw.TLabel(self.break_duration_holding_frame, text="Break Duration (minutes):")
+        self.break_duration_label.configure(text_color=self.theme["CTkLabel"]["settings"])
         self.break_duration_entry = cw.TEntry(self.break_duration_holding_frame)
 
         self.theme_frame = cw.TFrame(self)
+        self.theme_frame.configure(fg_color=self.theme["CTkFrame"]["settings"])
         self.theme_holding_frame = cw.PlaceholderFrame(self.theme_frame)
         self.theme_label = cw.TLabel(self.theme_holding_frame, text="Theme:")
+        self.theme_label.configure(text_color=self.theme["CTkLabel"]["settings"])
         self.theme_selector = cw.TOptionMenu(self.theme_holding_frame, values=["Light", "Dark"])
 
         self.save_button = cw.TButton(self, text="Save", command=self.save_settings)

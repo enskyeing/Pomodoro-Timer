@@ -17,6 +17,10 @@ class PomodoroTimerApp(customtkinter.CTk):
             self.work_duration = settings["work_duration"]
             self.break_duration = settings["break_duration"]
 
+        self.theme = ThemeManager.theme
+
+        self.configure(fg_color=self.theme["CTk"]["fg_color"])
+
         self.minutes = self.work_duration
         self.seconds = 0
 
@@ -35,12 +39,12 @@ class PomodoroTimerApp(customtkinter.CTk):
         self.timer_frame = cw.PlaceholderFrame(self, width=x*2, height=y*2)
         self.timer_canvas = cw.TCanvas(self.timer_frame, width=x*2, height=y*2)
         self.timer_text_outline = [
-            self.timer_canvas.create_text(x - 2, y, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill="#161616"),
-            self.timer_canvas.create_text(x + 2, y, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill="#161616"),
-            self.timer_canvas.create_text(x, y - 2, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill="#161616"),
-            self.timer_canvas.create_text(x, y + 2, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill="#161616"),
+            self.timer_canvas.create_text(x - 2, y, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill=self.theme["CTkLabel"]["border_color"]),
+            self.timer_canvas.create_text(x + 2, y, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill=self.theme["CTkLabel"]["border_color"]),
+            self.timer_canvas.create_text(x, y - 2, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill=self.theme["CTkLabel"]["border_color"]),
+            self.timer_canvas.create_text(x, y + 2, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill=self.theme["CTkLabel"]["border_color"]),
         ]
-        self.timer_text = self.timer_canvas.create_text(x, y, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill="#0D586D")
+        self.timer_text = self.timer_canvas.create_text(x, y, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill=self.theme["CTkLabel"]["secondary_text_color"])
 
         self.rs_spacer_frame = cw.PlaceholderFrame(self, width=30, height=30)
 
