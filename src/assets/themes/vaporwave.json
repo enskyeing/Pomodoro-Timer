@@ -24,7 +24,7 @@
     "corner_radius": 0,
     "border_width": 0,
     "fg_color": "transparent",
-    "border_color": "#0D586D",
+    "border_color": "#072C36",
     "primary_text_color": "#d13189",
     "secondary_text_color": "#F3EFE0"
   },
@@ -56,6 +56,14 @@
     "fg_color": ["gray90", "gray20"],
     "hover_color": ["gray75", "gray28"],
     "text_color": ["gray14", "gray84"]
+  },
+  "PlaceholderFrame": {
+    "fg_color": "transparent"
+  },
+  "CTkCanvas": {
+    "bg": "#d13189",
+    "highlightthickness": 0,
+    "borderwidth": 0
   },
   "CTkFont": {
     "macOS": {

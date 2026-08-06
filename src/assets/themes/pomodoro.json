@@ -1,6 +1,6 @@
 {
   "CTk": {
-    "fg_color": "#072C36"
+    "fg_color": "#F3EFE0"
   },
   "CTkToplevel": {
     "fg_color": "#072C36"
@@ -56,6 +56,14 @@
     "fg_color": ["gray90", "gray20"],
     "hover_color": ["gray75", "gray28"],
     "text_color": ["gray14", "gray84"]
+  },
+  "PlaceholderFrame": {
+    "fg_color": "transparent"
+  },
+  "CTkCanvas": {
+    "bg": "#a43f2d",
+    "highlightthickness": 0,
+    "borderwidth": 0
   },
   "CTkFont": {
     "macOS": {
