@@ -9,8 +9,9 @@
     "corner_radius": 6,
     "border_width": 2,
     "primary_fg_color": "#072C36",
-    "secondary_fg_color": "#4b9071",
-    "border_color": "#0D586D"
+    "secondary_fg_color": "#008080",
+    "border_color": "#0D586D",
+    "settings": "#008080"
   },
   "CTkButton": {
     "corner_radius": 6,
@@ -26,7 +27,8 @@
     "fg_color": "transparent",
     "border_color": "#0D586D",
     "primary_text_color": "#0D586D",
-    "secondary_text_color": "#F3EFE0"
+    "secondary_text_color": "#F3EFE0",
+    "settings": "#F3EFE0"
   },
   "CTkEntry": {
     "corner_radius": 6,

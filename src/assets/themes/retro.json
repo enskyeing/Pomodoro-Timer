@@ -10,7 +10,8 @@
     "border_width": 2,
     "primary_fg_color": "#FFFFFF",
     "secondary_fg_color": "#7FEFBD",
-    "border_color": "#161616"
+    "border_color": "#161616",
+    "settings": "#7FEFBD"
   },
   "CTkButton": {
     "corner_radius": 6,
@@ -26,7 +27,8 @@
     "fg_color": "transparent",
     "border_color": "#161616",
     "primary_text_color": "#161616",
-    "secondary_text_color": "#F3EFE0"
+    "secondary_text_color": "#F3EFE0",
+    "settings": "#161616"
   },
   "CTkEntry": {
     "corner_radius": 6,

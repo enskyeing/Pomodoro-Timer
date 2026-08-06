@@ -10,7 +10,8 @@
     "border_width": 2,
     "primary_fg_color": "#072C36",
     "secondary_fg_color": "#d13189",
-    "border_color": "#0D586D"
+    "border_color": "#0D586D",
+    "settings": "#072C36"
   },
   "CTkButton": {
     "corner_radius": 6,
@@ -25,8 +26,9 @@
     "border_width": 0,
     "fg_color": "transparent",
     "border_color": "#072C36",
-    "primary_text_color": "#d13189",
-    "secondary_text_color": "#F3EFE0"
+    "primary_text_color": "#072C36",
+    "secondary_text_color": "#F3EFE0",
+    "settings": "#d13189"
   },
   "CTkEntry": {
     "corner_radius": 6,
