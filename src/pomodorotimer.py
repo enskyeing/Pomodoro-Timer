@@ -3,6 +3,8 @@ from tkinter import font
 import customtkinter
 from settings_ui import SettingsUI
 import json
+import widgets as cw
+from theme.thememanager import ThemeManager
 
 
 class PomodoroTimerApp(customtkinter.CTk):
@@ -15,32 +17,36 @@ class PomodoroTimerApp(customtkinter.CTk):
             self.work_duration = settings["work_duration"]
             self.break_duration = settings["break_duration"]
 
+        self.theme = ThemeManager.theme
+
+        self.configure(fg_color=self.theme["CTk"]["fg_color"])
+
         self.minutes = self.work_duration
         self.seconds = 0
 
         self.on_break = False
         self.paused = False
 
-        self.settings_btn = customtkinter.CTkButton(self, width=30, height=30, text="⚙️", command=self.settings_button_callback)
+        self.settings_btn = cw.TButton(self, width=30, height=30, text="⚙️", command=self.settings_button_callback)
 
-        self.btn_frame = customtkinter.CTkFrame(self, width=100, height=50)
-        self.play_btn = customtkinter.CTkButton(self.btn_frame, width=30, height=30, text="▶️", command=self.play_button_callback)
-        self.pause_btn = customtkinter.CTkButton(self.btn_frame, width=30, height=30, text="⏸️", command=self.pause_button_callback)
-        self.skip_btn = customtkinter.CTkButton(self.btn_frame, width=30, height=30, text="⏭️", command=self.skip_button_callback)
-        self.reset_btn = customtkinter.CTkButton(self.btn_frame, width=30, height=30, text="🔄", command=self.reset_button_callback)
+        self.btn_frame = cw.TFrame(self, width=100, height=50)
+        self.play_btn = cw.TButton(self.btn_frame, width=30, height=30, text="▶️", command=self.play_button_callback)
+        self.pause_btn = cw.TButton(self.btn_frame, width=30, height=30, text="⏸️", command=self.pause_button_callback)
+        self.skip_btn = cw.TButton(self.btn_frame, width=30, height=30, text="⏭️", command=self.skip_button_callback)
+        self.reset_btn = cw.TButton(self.btn_frame, width=30, height=30, text="🔄", command=self.reset_button_callback)
 
         x, y = 180, 80
-        self.timer_frame = customtkinter.CTkFrame(self, width=x*2, height=y*2)
-        self.timer_canvas = customtkinter.CTkCanvas(self.timer_frame, width=x*2, height=y*2)
+        self.timer_frame = cw.PlaceholderFrame(self, width=x*2, height=y*2)
+        self.timer_canvas = cw.TCanvas(self.timer_frame, width=x*2, height=y*2)
         self.timer_text_outline = [
-            self.timer_canvas.create_text(x - 2, y, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill="#161616"),
-            self.timer_canvas.create_text(x + 2, y, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill="#161616"),
-            self.timer_canvas.create_text(x, y - 2, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill="#161616"),
-            self.timer_canvas.create_text(x, y + 2, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill="#161616"),
+            self.timer_canvas.create_text(x - 2, y, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill=self.theme["CTkLabel"]["border_color"]),
+            self.timer_canvas.create_text(x + 2, y, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill=self.theme["CTkLabel"]["border_color"]),
+            self.timer_canvas.create_text(x, y - 2, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill=self.theme["CTkLabel"]["border_color"]),
+            self.timer_canvas.create_text(x, y + 2, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill=self.theme["CTkLabel"]["border_color"]),
         ]
-        self.timer_text = self.timer_canvas.create_text(x, y, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill="#0D586D")
+        self.timer_text = self.timer_canvas.create_text(x, y, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill=self.theme["CTkLabel"]["secondary_text_color"])
 
-        self.rs_spacer_frame = customtkinter.CTkFrame(self, width=30, height=30)
+        self.rs_spacer_frame = cw.PlaceholderFrame(self, width=30, height=30)
 
         # Build layout
         self.settings_btn.grid(row=0, column=0, padx=10, pady=10, sticky="nw")
