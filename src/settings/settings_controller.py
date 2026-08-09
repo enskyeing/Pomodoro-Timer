@@ -11,19 +11,19 @@ class SettingsController:
         }
         self.settings = {}
 
-    def _load_settings(self):
+    def _load(self):
         try:
             with open(self.settings_file, "r") as f:
                 self.settings = json.load(f)
         except FileNotFoundError:
             self.settings = self.default_settings
-            self.save_settings()
+            self.save()
 
-    def save_settings(self):
+    def save(self):
         with open(self.settings_file, "w") as f:
             json.dump(self.settings, f)
 
-    def update_settings(self, work_duration=None, break_duration=None, theme=None):
+    def update(self, work_duration=None, break_duration=None, theme=None):
         if work_duration is not None and len(work_duration) > 0:
             self._check_duration(work_duration)
             self.settings["work_duration"] = int(work_duration)
@@ -33,7 +33,7 @@ class SettingsController:
         if theme is not None and theme != self.settings["theme"]:
             self.settings["theme"] = theme
 
-        self.save_settings()
+        self.save()
 
     def _check_duration(self, duration):
         try:

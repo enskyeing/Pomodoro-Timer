@@ -1,4 +1,4 @@
 from settings.settings_controller import SettingsController
 
 controller = SettingsController()
-controller._load_settings()
+controller._load()
