@@ -1,13 +1,16 @@
 import customtkinter
 import widgets as cw
 from theme.thememanager import ThemeManager
+from settings.settings_controller import SettingsController
 
 
-class SettingsUI(customtkinter.CTkToplevel):
+class SettingsView(customtkinter.CTkToplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("Settings")
         self.geometry("300x300")
+
+        self.settings = SettingsController()
 
         self.theme = ThemeManager.theme
 
