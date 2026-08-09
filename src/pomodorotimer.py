@@ -1,10 +1,9 @@
-from tkinter import font
-
 import customtkinter
-from settings_ui import SettingsUI
-import json
 import widgets as cw
 from theme.thememanager import ThemeManager
+
+from settings_view import SettingsView
+import settings
 
 
 class PomodoroTimerApp(customtkinter.CTk):
@@ -12,14 +11,14 @@ class PomodoroTimerApp(customtkinter.CTk):
         super().__init__()
         self.geometry("500x400")
 
-        with open("src/settings.json", "r") as f:
-            settings = json.load(f)
-            self.work_duration = settings["work_duration"]
-            self.break_duration = settings["break_duration"]
+        self.settings = settings.controller
 
         self.theme = ThemeManager.theme
 
         self.configure(fg_color=self.theme["CTk"]["fg_color"])
+
+        self.work_duration = self.settings.settings["work_duration"]
+        self.break_duration = self.settings.settings["break_duration"]
 
         self.minutes = self.work_duration
         self.seconds = 0
@@ -100,7 +99,7 @@ class PomodoroTimerApp(customtkinter.CTk):
             self.columnconfigure(i, weight=1)
 
     def settings_button_callback(self):
-        self.settings_window = SettingsUI(self)
+        self.settings_window = SettingsView(self)
         self.settings_window.after(10, self.settings_window.lift)  # Focus on the settings window
 
     def play_button_callback(self):
