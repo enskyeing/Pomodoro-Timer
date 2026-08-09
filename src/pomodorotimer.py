@@ -35,24 +35,57 @@ class PomodoroTimerApp(customtkinter.CTk):
         self.skip_btn = cw.TButton(self.btn_frame, width=30, height=30, text="⏭️", command=self.skip_button_callback)
         self.reset_btn = cw.TButton(self.btn_frame, width=30, height=30, text="🔄", command=self.reset_button_callback)
 
-        x, y = 180, 80
-        self.timer_frame = cw.PlaceholderFrame(self, width=x*2, height=y*2)
-        self.timer_canvas = cw.TCanvas(self.timer_frame, width=x*2, height=y*2)
-        self.timer_text_outline = [
-            self.timer_canvas.create_text(x - 2, y, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill=self.theme["CTkLabel"]["border_color"]),
-            self.timer_canvas.create_text(x + 2, y, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill=self.theme["CTkLabel"]["border_color"]),
-            self.timer_canvas.create_text(x, y - 2, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill=self.theme["CTkLabel"]["border_color"]),
-            self.timer_canvas.create_text(x, y + 2, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill=self.theme["CTkLabel"]["border_color"]),
-        ]
-        self.timer_text = self.timer_canvas.create_text(x, y, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill=self.theme["CTkLabel"]["secondary_text_color"])
-
         self.rs_spacer_frame = cw.PlaceholderFrame(self, width=30, height=30)
+
+        x, y = 180, 80
+        self.timer_frame = cw.TFrame(self, width=x*2, height=y*2)
+        self.timer_frame.configure(fg_color=self.theme["CTkFrame"]["border_color"])
+        self.timer_canvas = cw.TCanvas(self.timer_frame, width=x*2, height=y*2)
+
+        # Add extra padding to Canvas corners
+        rounded_corner_coords = [
+            (0, 0, 0.4, 1), # top left
+            (0, 0, 1, 0.4),
+            (0, 0, 0.2, 2),
+            (0, 0, 2, 0.2),
+            (0, y*2, 0.4, y*2 - 1), # bottom left
+            (0, y*2, 1, y*2 - 0.4),
+            (0, y*2, 0.2, y*2 - 2),
+            (0, y*2, 2, y*2 - 0.2),
+            (x*2, 0, x*2 - 0.4, 1), # top right
+            (x*2, 0, x*2 - 1, 0.4),
+            (x*2, 0, x*2 - 0.2, 2),
+            (x*2, 0, x*2 - 2, 0.2),
+            (x*2, y*2, x*2 - 0.4, y*2 - 1), # bottom right
+            (x*2, y*2, x*2 - 1, y*2 - 0.4),
+            (x*2, y*2, x*2 - 0.2, y*2 - 2),
+            (x*2, y*2, x*2 - 2, y*2 - 0.2),
+        ]
+        self.timer_canvas_rounded_corners = []
+        for coords in rounded_corner_coords:
+            self.timer_canvas_rounded_corners.append(
+                self.timer_canvas.create_rectangle(*coords, fill=self.theme["CTkFrame"]["border_color"])
+            )
+        
+        # Add text with outline effect
+        timer_text_ouline_coords = [
+            (x - 2, y),
+            (x + 2, y),
+            (x, y - 2),
+            (x, y + 2),
+        ]
+        self.timer_text_outline = []
+        for coords in timer_text_ouline_coords:
+            self.timer_text_outline.append(
+                self.timer_canvas.create_text(*coords, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill=self.theme["CTkLabel"]["border_color"])
+            )
+        self.timer_text = self.timer_canvas.create_text(x, y, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill=self.theme["CTkLabel"]["secondary_text_color"])
 
         # Build layout
         self.settings_btn.grid(row=0, column=0, padx=10, pady=10, sticky="nw")
 
         self.timer_frame.grid(row=1, column=1, columnspan=6, padx=10, pady=10)
-        self.timer_canvas.pack()
+        self.timer_canvas.pack(padx=self.theme["CTkFrame"]["border_width"], pady=self.theme["CTkFrame"]["border_width"])
 
         self.btn_frame.grid(row=2, column=2, columnspan=4, padx=10, pady=10)
         self.reset_btn.grid(row=0, column=0, padx=5, pady=5)
