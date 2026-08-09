@@ -2,36 +2,45 @@ import json
 
 
 class SettingsController:
-    
-    settings_file: str = "settings.json"
-    default_settings: dict = {
-        "work_duration": 25,
-        "break_duration": 5,
-        "theme": "retro"
-    }
-    settings: dict = {}
+    def __init__(self):
+        self.settings_file = "src/settings/settings.json"
+        self.default_settings = {
+            "work_duration": 25,
+            "break_duration": 5,
+            "theme": "retro"
+        }
+        self.settings = {}
 
-    @classmethod
-    def load_settings(cls):
+    def _load_settings(self):
         try:
-            with open(cls.settings_file, "r") as f:
-                cls.settings = json.load(f)
+            with open(self.settings_file, "r") as f:
+                self.settings = json.load(f)
         except FileNotFoundError:
-            cls.settings = cls.default_settings
-            cls.save_settings()
+            self.settings = self.default_settings
+            self.save_settings()
 
-    @classmethod
-    def save_settings(cls):
-        with open(cls.settings_file, "w") as f:
-            json.dump(cls.settings, f)
+    def save_settings(self):
+        with open(self.settings_file, "w") as f:
+            json.dump(self.settings, f)
 
-    @classmethod
-    def update_settings(cls, work_duration=None, break_duration=None, theme=None):
-        if work_duration is not None:
-            cls.settings["work_duration"] = work_duration
-        if break_duration is not None:
-            cls.settings["break_duration"] = break_duration
-        if theme is not None:
-            cls.settings["theme"] = theme
+    def update_settings(self, work_duration=None, break_duration=None, theme=None):
+        if work_duration is not None and len(work_duration) > 0:
+            self._check_duration(work_duration)
+            self.settings["work_duration"] = int(work_duration)
+        if break_duration is not None and len(break_duration) > 0:
+            self._check_duration(break_duration)
+            self.settings["break_duration"] = int(break_duration)
+        if theme is not None and theme != self.settings["theme"]:
+            self.settings["theme"] = theme
 
-        cls.save_settings()
+        self.save_settings()
+
+    def _check_duration(self, duration):
+        try:
+            duration_int = int(duration)
+            if duration_int <= 0:
+                raise ValueError("Duration must be a positive integer.")
+            return True
+        except ValueError:
+            raise ValueError("Duration must be an integer.")
+
