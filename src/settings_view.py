@@ -1,13 +1,16 @@
 import customtkinter
 import widgets as cw
 from theme.thememanager import ThemeManager
+import settings
 
 
-class SettingsUI(customtkinter.CTkToplevel):
+class SettingsView(customtkinter.CTkToplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("Settings")
         self.geometry("300x300")
+
+        self.settings = settings.controller
 
         self.theme = ThemeManager.theme
 
@@ -67,7 +70,7 @@ class SettingsUI(customtkinter.CTkToplevel):
         self.columnconfigure(0, weight=1)
 
     def save_settings(self):
-        # Here you would save the settings to a file or update the main app's settings
         work_duration = self.work_duration_entry.get()
         break_duration = self.break_duration_entry.get()
-        print(f"Saved settings: Work Duration = {work_duration}, Break Duration = {break_duration}")
+        theme = self.theme_selector.get()
+        self.settings.update(work_duration=work_duration, break_duration=break_duration, theme=theme)
