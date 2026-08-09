@@ -21,7 +21,7 @@ class SettingsController:
 
     def save(self):
         with open(self.settings_file, "w") as f:
-            json.dump(self.settings, f)
+            json.dump(self.settings, f, indent=4)
 
     def update(self, work_duration=None, break_duration=None, theme=None):
         if work_duration is not None and len(work_duration) > 0:
