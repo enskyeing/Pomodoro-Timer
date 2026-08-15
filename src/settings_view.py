@@ -73,6 +73,10 @@ class SettingsView(customtkinter.CTkToplevel):
 
         self.columnconfigure(0, weight=1)
 
+        # Entry box text
+        self.work_duration_entry.insert(0, str(self.settings.settings["work_duration"]))
+        self.break_duration_entry.insert(0, str(self.settings.settings["break_duration"]))
+
     def save_settings_button_callback(self):
         work_duration = self.work_duration_entry.get()
         break_duration = self.break_duration_entry.get()
