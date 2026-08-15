@@ -6,4 +6,5 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "customtkinter>=6.0.0",
+    "pyglet>=2.1.16",
 ]
