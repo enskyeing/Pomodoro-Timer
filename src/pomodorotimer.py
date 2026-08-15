@@ -1,9 +1,14 @@
 import customtkinter
 import widgets as cw
+import pyglet
 from theme.thememanager import ThemeManager
 
 from settings_view import SettingsView
 import settings
+
+pyglet.options['win32_gdi_font'] = True  # Fixes font rendering issues on Windows
+font_directory = "src/assets/fonts"
+pyglet.font.add_directory(font_directory)
 
 
 class PomodoroTimerApp(customtkinter.CTk):
@@ -72,6 +77,10 @@ class PomodoroTimerApp(customtkinter.CTk):
             (x + 2, y),
             (x, y - 2),
             (x, y + 2),
+            (x - 1, y - 1),
+            (x + 1, y - 1),
+            (x - 1, y + 1),
+            (x + 1, y + 1)
         ]
         self.timer_text_outline = []
         for coords in timer_text_ouline_coords:
@@ -155,7 +164,8 @@ class PomodoroTimerApp(customtkinter.CTk):
         self.after(1000, self.count_down)
 
     def update_timer_text(self):
+        updated_text = f"{self.minutes:02d}:{self.seconds:02d}"
         for item in self.timer_text_outline:
-            self.timer_canvas.itemconfig(item, text=f"{self.minutes:02d}:{self.seconds:02d}")
+            self.timer_canvas.itemconfig(item, text=updated_text)
 
-        self.timer_canvas.itemconfig(self.timer_text, text=f"{self.minutes:02d}:{self.seconds:02d}")
+        self.timer_canvas.itemconfig(self.timer_text, text=updated_text)
