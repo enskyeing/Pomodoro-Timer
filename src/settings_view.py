@@ -6,7 +6,8 @@ import settings
 
 class SettingsView(customtkinter.CTkToplevel):
     def __init__(self, parent):
-        super().__init__(parent)
+        self.main_app = parent
+        super().__init__(self.main_app)
         self.title("Settings")
         self.geometry("300x300")
 
@@ -82,6 +83,7 @@ class SettingsView(customtkinter.CTkToplevel):
         break_duration = self.break_duration_entry.get()
         theme = self.theme_selector.get()
         self.settings.update(work_duration=work_duration, break_duration=break_duration, theme=theme)
+        self.main_app.update_settings()
 
     def reset_work_duration_button_callback(self):
         self.work_duration_entry.delete(0, "end")
