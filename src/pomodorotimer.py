@@ -169,6 +169,9 @@ class PomodoroTimerApp(customtkinter.CTk):
         self.work_duration = self.settings.settings["work_duration"]
         self.break_duration = self.settings.settings["break_duration"]
 
-        self.minutes = self.work_duration
+        if self.on_break:
+            self.minutes = self.break_duration
+        else:
+            self.minutes = self.work_duration
         self.seconds = 0
         self.update_timer_text()
