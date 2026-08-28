@@ -24,7 +24,7 @@ class PomodoroTimerApp(customtkinter.CTk):
         self.seconds = 0
 
         self.on_break = False
-        self.paused = False
+        self.paused = True
 
         self.settings_btn = cw.TButton(self, width=30, height=30, text="⚙️", command=self.settings_button_callback)
 
@@ -103,13 +103,18 @@ class PomodoroTimerApp(customtkinter.CTk):
         self.settings_window.after(10, self.settings_window.lift)  # Focus on the settings window
 
     def play_button_callback(self):
+        if not self.paused:
+            return  # Already counting down, do nothing
+        
         self.paused = False
+        self.counting = True
         self.count_down()
 
     def pause_button_callback(self):
         self.paused = True
 
     def skip_button_callback(self):
+        self.paused = True
         if self.on_break:
             self.on_break = False
             self.minutes = self.work_duration
