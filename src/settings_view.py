@@ -2,11 +2,13 @@ import customtkinter
 import widgets as cw
 from theme.thememanager import ThemeManager
 import settings
+from confirmation_view import ConfirmationView
 
 
 class SettingsView(customtkinter.CTkToplevel):
     def __init__(self, parent):
-        super().__init__(parent)
+        self.main_app = parent
+        super().__init__(self.main_app)
         self.title("Settings")
         self.geometry("300x300")
 
@@ -77,11 +79,30 @@ class SettingsView(customtkinter.CTkToplevel):
         self.work_duration_entry.insert(0, str(self.settings.settings["work_duration"]))
         self.break_duration_entry.insert(0, str(self.settings.settings["break_duration"]))
 
+        self.grab_set()  # Make the settings window modal
+
     def save_settings_button_callback(self):
-        work_duration = self.work_duration_entry.get()
-        break_duration = self.break_duration_entry.get()
-        theme = self.theme_selector.get()
-        self.settings.update(work_duration=work_duration, break_duration=break_duration, theme=theme)
+        work_duration_new = self.work_duration_entry.get()
+        break_duration_new = self.break_duration_entry.get()
+        theme_new = self.theme_selector.get()
+
+        if (work_duration_new != str(self.settings.settings["work_duration"]) or 
+            break_duration_new != str(self.settings.settings["break_duration"])):
+            confirmation_window = ConfirmationView(self, "Saving these changes will reset your timer, do you wish to proceed?")
+            confirmation_window.wait_window()  # Wait for the confirmation window to close
+            if confirmation_window.confirmed_state:
+                # Update settings and reset timer
+                self.settings.update(work_duration=work_duration_new, break_duration=break_duration_new, theme=theme_new)
+                self.main_app.update_settings()
+                self.destroy()
+            else:
+                # Reset the entry boxes to the current settings if the user cancels the confirmation
+                self.work_duration_entry.delete(0, "end")
+                self.work_duration_entry.insert(0, str(self.settings.settings["work_duration"]))
+                self.break_duration_entry.delete(0, "end")
+                self.break_duration_entry.insert(0, str(self.settings.settings["break_duration"]))
+        else:
+            self.destroy()
 
     def reset_work_duration_button_callback(self):
         self.work_duration_entry.delete(0, "end")

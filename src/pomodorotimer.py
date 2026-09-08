@@ -164,3 +164,14 @@ class PomodoroTimerApp(customtkinter.CTk):
             self.timer_canvas.itemconfig(item, text=f"{self.minutes:02d}:{self.seconds:02d}")
 
         self.timer_canvas.itemconfig(self.timer_text, text=f"{self.minutes:02d}:{self.seconds:02d}")
+
+    def update_settings(self):
+        self.work_duration = self.settings.settings["work_duration"]
+        self.break_duration = self.settings.settings["break_duration"]
+
+        if self.on_break:
+            self.minutes = self.break_duration
+        else:
+            self.minutes = self.work_duration
+        self.seconds = 0
+        self.update_timer_text()
