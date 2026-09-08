@@ -14,15 +14,21 @@ class ConfirmationView(customtkinter.CTkToplevel):
 
         self.confirmation_text = cw.TLabel(self, text=question)
 
-        self.confirm_btn = cw.TButton(self, text="Confirm")
-        self.deny_btn = cw.TButton(self, text="Deny")
+        self.confirm_btn = cw.TButton(self, text="Confirm", command=self.confirm_btn_callback)
+        self.deny_btn = cw.TButton(self, text="Deny", command=self.deny_btn_callback)
 
-        self.confirmation_text.grid(row=0, col=0, columnspan=5)
+        self.confirmation_text.grid(row=0, column=0, columnspan=5)
         self.deny_btn.grid(row=1, column=1)
         self.confirm_btn.grid(row=1, column=3)
+
+        self.confirmed_state = False
+
+        self.grab_set()  # Make the confirmation window modal
     
     def deny_btn_callback(self):
-        pass 
+        self.destroy()
+        self.confirmed_state = False
 
     def confirm_btn_callback(self):
-        pass
+        self.destroy()
+        self.confirmed_state = True
