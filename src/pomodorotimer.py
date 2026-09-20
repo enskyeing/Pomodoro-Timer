@@ -26,13 +26,21 @@ class PomodoroTimerApp(customtkinter.CTk):
         self.on_break = False
         self.paused = True
 
-        self.settings_btn = cw.TButton(self, width=30, height=30, text="⚙️", command=self.settings_button_callback)
+        self.settings_btn_dropshadow_frame = cw.TFrame(self)
+        self.settings_btn = cw.TButton(self.settings_btn_dropshadow_frame, width=30, height=30, text="⚙️", command=self.settings_button_callback)
+        self.settings_btn_dropshadow_frame.configure(fg_color=self.theme["CTkButton"]["border_color"])
+        self.settings_btn.configure(border_width=0, corner_radius=0)
 
-        self.btn_frame = cw.TFrame(self, width=100, height=50)
+        self.btn_dropshadow_frame = cw.TFrame(self)
+        self.btn_dropshadow_frame.configure(fg_color=self.theme["CTkFrame"]["border_color"])
+        self.btn_frame = cw.TFrame(self.btn_dropshadow_frame, width=100, height=50)
         self.play_btn = cw.TButton(self.btn_frame, width=30, height=30, text="▶️", command=self.play_button_callback)
         self.pause_btn = cw.TButton(self.btn_frame, width=30, height=30, text="⏸️", command=self.pause_button_callback)
         self.skip_btn = cw.TButton(self.btn_frame, width=30, height=30, text="⏭️", command=self.skip_button_callback)
         self.reset_btn = cw.TButton(self.btn_frame, width=30, height=30, text="🔄", command=self.reset_button_callback)
+
+        self.btn_dropshadow_frame.configure(fg_color="#242424")
+        self.btn_frame.configure(border_color="#242424", border_width=0, corner_radius=0)
 
         self.rs_spacer_frame = cw.PlaceholderFrame(self, width=30, height=30)
 
@@ -81,17 +89,27 @@ class PomodoroTimerApp(customtkinter.CTk):
         self.timer_text = self.timer_canvas.create_text(x, y, text=f"{self.minutes:02d}:{self.seconds:02d}", font=("Arial", 98), fill=self.theme["CTkLabel"]["secondary_text_color"])
 
         # Build layout
-        self.settings_btn.grid(row=0, column=0, padx=10, pady=10, sticky="nw")
+        drop_shadow_px = self.theme["CTkFrame"]["border_width"]
 
+        ## drop shadows
+        self.btn_dropshadow_frame.grid(row=2, column=2, columnspan=4, padx=10, pady=10)
+        self.settings_btn_dropshadow_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nw")
+
+        ## settings button
+        self.settings_btn.grid(row=0, column=0, padx=(drop_shadow_px*2, drop_shadow_px), pady=(drop_shadow_px, drop_shadow_px*2))
+
+        ## timer
         self.timer_frame.grid(row=1, column=1, columnspan=6, padx=10, pady=10)
-        self.timer_canvas.pack(padx=self.theme["CTkFrame"]["border_width"], pady=self.theme["CTkFrame"]["border_width"])
+        self.timer_canvas.pack(padx=(drop_shadow_px*2, drop_shadow_px), pady=(drop_shadow_px, drop_shadow_px*2))
 
-        self.btn_frame.grid(row=2, column=2, columnspan=4, padx=10, pady=10)
+        ## buttons
+        self.btn_frame.grid(row=2, column=2, columnspan=4, padx=(drop_shadow_px*2, drop_shadow_px), pady=(drop_shadow_px, drop_shadow_px*2))
         self.reset_btn.grid(row=0, column=0, padx=5, pady=5)
         self.play_btn.grid(row=0, column=1, padx=5, pady=5)
         self.pause_btn.grid(row=0, column=2, padx=5, pady=5)
         self.skip_btn.grid(row=0, column=3, padx=5, pady=5)
 
+        ## spacers
         self.rs_spacer_frame.grid(row=0, column=7, padx=10, pady=10)
 
         # Make columns expand equally
