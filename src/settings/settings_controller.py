@@ -1,8 +1,10 @@
 import json
+import os
 
 
 class SettingsController:
     def __init__(self):
+        self.themes_path = "src/assets/themes"
         self.settings_file = "src/settings/settings.json"
         self.default_settings = {
             "work_duration": 25,
@@ -10,6 +12,7 @@ class SettingsController:
             "theme": "retro"
         }
         self.settings = {}
+        self.theme_names = []
 
     def _load(self):
         try:
@@ -18,6 +21,8 @@ class SettingsController:
         except FileNotFoundError:
             self.settings = self.default_settings
             self.save()
+
+        self.theme_names = [x[:-5] for x in os.listdir(self.themes_path) if x.endswith(".json") and not x.startswith("__")]
 
     def save(self):
         with open(self.settings_file, "w") as f:
