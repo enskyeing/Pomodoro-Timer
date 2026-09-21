@@ -40,7 +40,8 @@ class SettingsView(customtkinter.CTkToplevel):
         self.theme_holding_frame = cw.PlaceholderFrame(self.theme_frame)
         self.theme_label = cw.TLabel(self.theme_holding_frame, text="Theme", font=("Arial", 12, "bold"))
         self.theme_label.configure(text_color=self.theme["CTkLabel"]["settings"])
-        self.theme_selector = cw.TOptionMenu(self.theme_holding_frame, values=["Light", "Dark"])
+        self.theme_selector = cw.TOptionMenu(self.theme_holding_frame, values=self.settings.theme_names)
+        self.theme_selector.set(self.settings.settings["theme"])
 
         self.save_button = cw.TButton(self, text="Save", command=self.save_settings_button_callback)
 
