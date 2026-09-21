@@ -22,7 +22,7 @@ class SettingsController:
             self.settings = self.default_settings
             self.save()
 
-        self.theme_names = [x[:-5] for x in os.listdir(self.themes_path) if x.endswith(".json") and not x.startswith("__")]
+        self.theme_names = [x[:-5].title() for x in os.listdir(self.themes_path) if x.endswith(".json") and not x.startswith("__")]
 
     def save(self):
         with open(self.settings_file, "w") as f:
