@@ -85,10 +85,11 @@ class SettingsView(customtkinter.CTkToplevel):
     def save_settings_button_callback(self):
         work_duration_new = self.work_duration_entry.get()
         break_duration_new = self.break_duration_entry.get()
-        theme_new = self.theme_selector.get()
+        theme_new = self.theme_selector.get().lower()
 
         if (work_duration_new != str(self.settings.settings["work_duration"]) or 
-            break_duration_new != str(self.settings.settings["break_duration"])):
+            break_duration_new != str(self.settings.settings["break_duration"]) or
+            theme_new != self.settings.settings["theme"]):
             confirmation_window = ConfirmationView(self, "Saving these changes will reset your timer, do you wish to proceed?")
             confirmation_window.wait_window()  # Wait for the confirmation window to close
             if confirmation_window.confirmed_state:
